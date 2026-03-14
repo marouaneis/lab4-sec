@@ -20,8 +20,6 @@
 
 
 
-[INSÉRER CAPTURE 2 ICI]  
-**Capture 2 : Listing du contenu APK (AndroidManifest.xml, classes.dex, res/, META-INF/)**
 
 ## Résumé exécutif
 
@@ -49,8 +47,6 @@ Les principales préoccupations sont :
 **Impact potentiel** : Clé récupérable en clair → déchiffrement trivial du secret.  
 **Remédiation** : Ne jamais stocker de clé dans le code. Utiliser KeyStore ou chiffrement dérivé du device/user.
 
-[INSÉRER CAPTURE 3 ICI]  
-**Capture 3 : Recherche "8d127684cbc37c17616d806cf50473cc" dans JADX**
 
 ### Constat #2 : Ciphertext du secret en base64 hardcoded
 **Sévérité** : Élevée  
@@ -59,8 +55,7 @@ Les principales préoccupations sont :
 **Impact potentiel** : Secret ("I want to believe") récupéré statiquement en quelques secondes.  
 **Remédiation** : Ne pas embarquer de données chiffrées avec clé présente dans l'APK.
 
-[INSÉRER CAPTURE 4 ICI]  
-**Capture 4 : Recherche "5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc=" dans JADX**
+
 
 ### Constat #3 : Utilisation du mode AES-ECB (insecure)
 **Sévérité** : Élevée  
@@ -69,8 +64,7 @@ Les principales préoccupations sont :
 **Impact potentiel** : Mode cassé depuis 15+ ans (patterns répétitifs, attaques connues).  
 **Remédiation** : Migrer vers AES-GCM ou CBC+HMAC.
 
-[INSÉRER CAPTURE 5 ICI]  
-**Capture 5 : Recherche "AES/ECB/PKCS7Padding" ou "SecretKeySpec" dans JADX**
+
 
 ### Constat #4 : Logs debug + détections root/debug naïves
 **Sévérité** : Moyenne  
@@ -79,8 +73,6 @@ Les principales préoccupations sont :
 **Impact potentiel** : Logs via Logcat + bypass facile (Frida, Smali patch).  
 **Remédiation** : Retirer logs en release + renforcer anti-root (Play Integrity, multiple checks).
 
-[INSÉRER CAPTURE 6 ICI]  
-**Capture 6 : Recherche globale "secret" ou "CodeCheck" dans JADX (avec résultats sur SecretKeySpec)**
 
 ## Annexes
 
@@ -90,8 +82,6 @@ Manifest minimal :
 - Pas de `INTERNET`, `WRITE_EXTERNAL_STORAGE`, `CAMERA`, etc.  
 - Seulement permissions système de base (launcher activity).
 
-[INSÉRER CAPTURE 7 ICI]  
-**Capture 7 : AndroidManifest.xml décodé (permissions et composants)**
 
 ### Composants exportés
 - Activité principale : `sg.vantagepoint.uncrackable1.MainActivity` (exportée comme launcher)  
@@ -102,10 +92,5 @@ Manifest minimal :
 - **Hash SHA-256 APK** : 1DA8BF7D266109F9A07C01BF7111A975CE01F190B9D914BCD3AE3D... (compléter avec ta valeur exacte)  
 - **Structure APK** : classes.dex unique, pas de multi-dex.
 
-[INSÉRER CAPTURE 8 ICI]  
-**Capture 8 : Tableau des chaînes sensibles trouvées dans MainActivity (ou ton tableau Markdown)**
-
-[INSÉRER CAPTURE 9 ICI]  
-**Capture 9 : dex2jar réussi – app-dex2jar.jar créé et ouvert (optionnel)**
 
 **Fin du rapport**
